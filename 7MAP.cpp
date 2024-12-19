@@ -11,7 +11,7 @@ int main() {
     cout << "Enter state name: ";
     cin >> stateName;
 
-    auto it = states.find(stateName);
+    map<string,int>::iterator it = states.find(stateName);
     if (it != states.end()) {
         cout << "Population of " << stateName << ": " << it->second << endl;
     } else {

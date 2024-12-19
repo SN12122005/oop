@@ -1,29 +1,21 @@
 #include<iostream>
 using namespace std;
-template<class T>
-void create(T*p,int size)
-{
-    int i;
-    cout<<"Enter the elements of array:"<<endl;
-    for(i=0;i<size;i++)
-    {
-        cin>>p[i];
-    }
-}
-template<class T>
-void show(T*p, int size)
+
+
+template<typename T>
+void show(T arr[], int size)
 {
     int i;
     cout<<"Elements of the array:\n"<<endl;
     for(i=0; i<size;i++)
     {
-        cout<<" "<<p[i];
+        cout<<" "<<arr[i];
         
         
     }
 }
-template<class T>
-void sort(T*arr,int size)
+template<typename T>
+void sort(T arr[],int size)
 {
     int i,j,k;
     T l;
@@ -44,26 +36,17 @@ void sort(T*arr,int size)
 }
 int main()
 {
-    int size,size1;
-    cout<<"Enter the size of integer array: "<<endl;
-    cin>>size;
-    int arr[size];
-    create(arr,size);
-    show(arr,size);
-    cout<<endl;
-    cout<<"Array after sorting integer values: "<<endl;
-    sort(arr,size);
-    show(arr,size);
-    cout<<endl;
-    cout<<"with float values"<<endl;
-    cout<<"Enter the size of float array: \n"<<endl;
-    cin>>size1;
-    float arr1[size1];
-    create<float>(arr1,size1);
-    show<float>(arr1,size1);
-    cout<<endl;
-    cout<<"Array after sorting float values"<<endl;
-    sort<float>(arr1,size1);
-    show<float>(arr1,size1);
+    int arr1[]={5,3,6,4,7,2,1};
+    float arr2[]={3.4,3.2,4.6,1.2,2.4};
+    int n = sizeof(arr1)/sizeof(arr1[0]);
+    int m = sizeof(arr2)/sizeof(arr2[0]);
+    
+    sort(arr1,n);
+    sort(arr2,m);
+    
+    show(arr1,n);
+    show(arr2,m);
+    
+    
     return 0;
 }

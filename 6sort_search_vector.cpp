@@ -1,126 +1,135 @@
 #include <iostream>
-#include<algorithm>
-#include<vector>
+#include <algorithm>
+#include <vector>
+#include <cstring> // For strcmp
 using namespace std;
- class item{
- public:
-	char name[10];
-	int quantity;
-	int cost;
-	int code;
-	bool operator==(const item& i1)
-		{
-		if(code==i1.code) return 1;
-		return 0;
-		}
-	bool operator<(const item& i1)
-	{
-			if(cost==i1.cost) return 1;
-			return 0;
-			}
+
+class item {
+public:
+    char name[10];
+    int quantity;
+    int cost;
+    int code;
+
+    bool operator==(const item& i1) const {
+        return code == i1.code;
+    }
+
+    bool operator<(const item& i1) const {
+        return cost < i1.cost;
+    }
 };
-vector<item>o1;
-void print(item &i1);
+
+vector<item> o1;
+
+void print(const item& i1);
 void display();
 void insert();
 void search();
 void dlt();
-bool compare(const item& i1,const item& i2)
-{
-	return i1.cost<i2.cost;
+bool compare(const item& i1, const item& i2) {
+    return i1.cost < i2.cost;
 }
-void insert()
-{
-	item i1;
-	cout<<"Enter Item Name"<<endl;
-	cin>>i1.name;
-	cout<<"Enter Item Quantity"<<endl;
-	cin>>i1.quantity;
-	cout<<"Enter Item Cost"<<endl;
-	cin>>i1.cost;
-	cout<<"Enter Item Code"<<endl;
-	cin>>i1.code;
 
-	o1.push_back(i1);
+void insert() {
+    item i1;
+    cout << "Enter Item Name : ";
+    cin >>i1.name; 
+    cout << "Enter Item Quantity: ";
+    cin >> i1.quantity;
+    cout << "Enter Item Cost: ";
+    cin >> i1.cost;
+    cout << "Enter Item Code: ";
+    cin >> i1.code;
+
+    o1.push_back(i1);
 }
-void display()
-{
-for_each(o1.begin(),o1.end(),print);
+
+void display() {
+    if (o1.empty()) {
+        cout << "No items to display.\n";
+        return;
+    }
+
+    for_each(o1.begin(), o1.end(), print);
 }
-void print(item &i1)
-{
-	cout<<"\n";
-	cout<<"\n item Name:-"<<i1.name;
-	cout<<"\n item Quantity:- "<<i1.quantity;
-	cout<<"\n item Cost:-"<<i1.cost;
-	cout<<"\n item Code:-  "<<i1.code;
+
+void print(const item& i1) {
+    cout << "\n";
+    cout << "Item Name: " << i1.name << "\n";
+    cout << "Item Quantity: " << i1.quantity << "\n";
+    cout << "Item Cost: " << i1.cost << "\n";
+    cout << "Item Code: " << i1.code << "\n";
 }
-void search()
-{
-	vector<item>::iterator p; item i1;
-	cout<<"\n Enter code to search Item";
-	cin>>i1.code;
-	p=find(o1.begin(),o1.end(),i1);
-	if(p==o1.end())
-	{
-		cout<<"\n Not found";
-	}
-	else
-	{
-		cout<<"\n Found"<<endl;
-		cout<<"\n Item name"<<p->name<<endl;
-		cout<<"\n Item quantity"<<p->quantity<<endl;
-		cout<<"\n Item cost"<<p->cost<<endl;
-		cout<<"\n Item code"<<p->code<<endl;
-	}
+
+void search() {
+    vector<item>::iterator p;
+    item i1;
+    cout << "Enter code to search for an item: ";
+    cin >> i1.code;
+
+    p = find(o1.begin(), o1.end(), i1);
+    if (p == o1.end()) {
+        cout << "Item not found.\n";
+    } else {
+        cout << "Item found:\n";
+        print(*p);
+    }
 }
-void dlt()
-{
-	vector<item>::iterator p;
-	item i1;
-	cout<<"enter item code to delete";
-	cin>>i1.code;
-	p=find(o1.begin(),o1.end(),i1);
-		if(p==o1.end())
-		{
-			cout<<"\n Not found";
-		}
-		else
-		{
-			o1.erase(p);
-			cout<<"\n Deleted";
-		}
+
+void dlt() {
+    vector<item>::iterator p;
+    item i1;
+    cout << "Enter item code to delete: ";
+    cin >> i1.code;
+
+    p = find(o1.begin(), o1.end(), i1);
+    if (p == o1.end()) {
+        cout << "Item not found.\n";
+    } else {
+        o1.erase(p);
+        cout << "Item deleted.\n";
+    }
 }
 
 int main() {
-	int ch;
-	do
-	{
-		cout<<"\n ****MENU****"<<endl;
-		cout<<"1.Insert"<<endl;
-		cout<<"2.Display"<<endl;
-		cout<<"3.Search"<<endl;
-		cout<<"4.Sort"<<endl;
-		cout<<"5.Delete"<<endl;
-		cout<<"6.Exit"<<endl;
-		cout<<"Enter your choice"<<endl;
-		cin>>ch;
-		switch(ch)
-		{
-		case 1: insert();
-		break;
-		case 2: display();
-		break;
-		case 3: search();
-				break;
-		case 4: sort(o1.begin(),o1.end(),compare);
-		cout<<"\n Sorted on cost";
-		display();
-				break;
-		case 5: dlt();
-				break;
-		case 6: exit(0);
-		}
-	}while(ch!=7);
-	return 0;
+    int ch;
+    do {
+        cout << "\n**** MENU ****\n";
+        cout << "1. Insert\n";
+        cout << "2. Display\n";
+        cout << "3. Search\n";
+        cout << "4. Sort (by cost)\n";
+        cout << "5. Delete\n";
+        cout << "6. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> ch;
+
+        switch (ch) {
+            case 1:
+                insert();
+                break;
+            case 2:
+                display();
+                break;
+            case 3:
+                search();
+                break;
+            case 4:
+                sort(o1.begin(), o1.end(), compare);
+                cout << "Items sorted by cost (ascending):\n";
+                display();
+                break;
+            case 5:
+                dlt();
+                break;
+            case 6:
+                cout << "Exiting the program. Goodbye!\n";
+                break;
+            default:
+                cout << "Invalid choice. Please try again.\n";
+        }
+    } while (ch != 6);
+
+    return 0;
 }
